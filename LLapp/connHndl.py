@@ -5,11 +5,16 @@ class connHndl:
     #variables
     network = 0
     addreses = set()
+    eventLog = 0
+    traceName = "CONN_HNDL"
 
     #constructor
-    def __init__(self):
+    def __init__(self,traceLog):
+        self.eventLog = traceLog
+        self.eventLog.traceAdd(self.traceName,"Connection handler, welcome!")
         tempIp = self.ownIP()
         self.network = tempIp[0:len(tempIp)-3]
+        self.eventLog.traceAdd(self.traceName,"Own ip: "+tempIp+" network: "+self.network)
         self.scanRun()
 
     #determine own ip
@@ -34,10 +39,6 @@ class connHndl:
                 addr = self.network + str(ip)
                 # print(addr+':')
                 if self.isOk(addr, port):
-                    print("Adres: " + addr + " port: " + str(port) + " nazwa: " + getfqdn(addr))
+                    self.eventLog.traceAdd(self.traceName,"Adres: " + addr + " port: " + str(port) + " nazwa: " + getfqdn(addr))
         self.addreses.remove(self.ownIP())
-        print("END")
-
-Scan1 = connHndl()
-print(Scan1.ownIP())
-print(Scan1.addreses)
+        self.eventLog.traceAdd(self.traceName,"End of scanning!")
