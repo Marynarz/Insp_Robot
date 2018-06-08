@@ -4,7 +4,7 @@ from funcs import *
 
 #global vars
 traceEntry = traceHndl()
-connHandler = connHndl(traceEntry)
+connHandler = connHndl(traceEntry,True)
 
 traceName = "MAIN"
 

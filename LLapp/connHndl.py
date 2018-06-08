@@ -11,12 +11,16 @@ class connHndl:
     clientSock = socket(AF_INET,SOCK_STREAM)
 
     #constructor
-    def __init__(self,traceLog):
+    def __init__(self,traceLog, client):
         self.eventLog = traceLog
         self.eventLog.traceAdd(self.traceName,"Connection handler, welcome!")
-        tempIp = self.ownIP()
-        self.network = tempIp[0:len(tempIp)-3]
-        self.eventLog.traceAdd(self.traceName,"Own ip: "+tempIp+" network: "+self.network)
+        if client:
+            tempIp = self.ownIP()
+            self.network = tempIp[0:len(tempIp)-3]
+            self.eventLog.traceAdd(self.traceName,"Own ip: "+tempIp+" network: "+self.network)
+            print('Loading...\n Wait a moment...')
+            connHandler.scanRun()
+            print("Welcome!")
 
     def __del__(self):
         self.clientSock.close()

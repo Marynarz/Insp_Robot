@@ -2,7 +2,7 @@ from connHndl import *
 from traceHndl import *
 
 traceEntry = traceHndl()
-connHandler = connHndl(traceEntry)
+connHandler = connHndl(traceEntry,False)
 
 traceName = "ROBT_MAIN"
 
