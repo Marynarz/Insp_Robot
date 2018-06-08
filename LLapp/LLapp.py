@@ -11,9 +11,6 @@ traceName = "MAIN"
 
 def main():
     traceEntry.traceAdd(traceName, "Poczatek pliku")
-    print('Loading...\n Wait a moment...')
-    connHandler.scanRun()
-    print("Welcome!")
     connHandler.connect()
     commandLineClient(traceEntry,connHandler)
 
