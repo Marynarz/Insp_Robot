@@ -1,17 +1,15 @@
 from connHndl import *
 from traceHndl import *
-from funcs import *
 
-#global vars
 traceEntry = traceHndl()
 connHandler = connHndl(traceEntry)
 
-traceName = "MAIN"
+traceName = "ROBT_MAIN"
 
 
 def main():
     traceEntry.traceAdd(traceName, "Poczatek pliku")
-    connHandler.connect()
+    connHandler.servRcv()
     commandLineClient(traceEntry,connHandler)
 
 if __name__ == "__main__":

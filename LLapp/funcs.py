@@ -7,7 +7,7 @@ def help():
     print("\"help\", \"h\" - this help")
     print("\"exit\", \"q\" - exit")
 
-def commandLineClient(traceEntry):
+def commandLineClient(traceEntry,connHndl):
     traceEntry.traceAdd(cliName, "Command Line Client Welcome!")
     while True:
         command = input("#:").split()
@@ -17,6 +17,9 @@ def commandLineClient(traceEntry):
             traceEntry.traceAdd(cliName, "EXIT: " + str(command))
             print("Bye...")
             break
+        elif command[0].lower() in ["send", "s"]:
+            connHndl.sendData(command[1])
+            print(connHndl.recvData())
         else:
             traceEntry.traceAdd(cliName, "Wronc command! typed: "+str(command))
             print("Wrong command. For help use command: help")

@@ -1,5 +1,6 @@
 from socket import *
 import netifaces as ni
+import sys
 
 class connHndl:
     #variables
@@ -7,7 +8,7 @@ class connHndl:
     addreses = set()
     eventLog = 0
     traceName = "CONN_HNDL"
-    clientSock = 0
+    clientSock = socket(AF_INET,SOCK_STREAM)
 
     #constructor
     def __init__(self,traceLog):
@@ -39,21 +40,43 @@ class connHndl:
 
     #scanning
     def scanRun(self):
-        for ip in range(1, 256):
+        for ip in range(2, 256):
             for port in range(1, 150):
                 addr = self.network + str(ip)
                 # print(addr+':')
-                if self.isOk(addr, port):
+                if addr == self.ownIP():
+                    pass
+                elif self.isOk(addr, port):
                     self.eventLog.traceAdd(self.traceName,"Adres: " + addr + " port: " + str(port) + " nazwa: " + getfqdn(addr))
-        #self.addreses.remove(self.ownIP())
+        self.eventLog.traceAdd(self.traceName,"IP ADRESSES found: "+str(self.addreses))
         self.eventLog.traceAdd(self.traceName,"End of scanning!")
 
     def connect(self):
-        self.clientSock = socket(AF_INET,SOCK_STREAM)
+        self.clientSock.settimeout(0.1)
         try:
             for ipAddr in self.addreses:
-                if self.clientSock.connect(ipAddr):
+                if ipAddr[0] == self.ownIP():
+                    pass
+                elif self.clientSock.connect(ipAddr):
+                    self.eventLog.traceAdd(self.traceName,"Conn established for: "+str(ipAddr))
                     break
                 self.eventLog.traceAdd(self.traceName,"Conn not estabished for: "+str(ipAddr))
+            #self.clientSock.close()
         except:
-            self.eventLog.traceAdd(self.traceName,"ERROR")
+            self.eventLog.traceAdd(self.traceName,sys.exc_info()[0])
+    def servRcv(self):
+        self.clientSock.bind(('localhost',50000))
+        self.clientSock.listen(1)
+        conn , addr = self.clientSock.accept()
+        while 1:
+            data = conn.recv(1024)
+            if not data:
+                break
+            conn.sendall(data)
+    def sendData(self,data):
+        try:
+            self.clientSock.sendall(str(data))
+        except:
+            self.eventLog.traceAdd(self.traceName, sys.exc_info()[0])
+    def recvData(self):
+        return self.clientSock.recv(1024)
