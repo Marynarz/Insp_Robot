@@ -17,9 +17,7 @@ class connHndl:
         tempIp = self.ownIP()
         self.network = tempIp[0:len(tempIp)-3]
         self.eventLog.traceAdd(self.traceName,"Own ip: "+tempIp+" network: "+self.network)
-        print("Loading... It can take a moment")
-        self.scanRun()
-        print("Loading succesfull, WELCOME!")
+
     def __del__(self):
         self.clientSock.close()
 
