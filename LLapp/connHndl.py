@@ -71,7 +71,7 @@ class connHndl:
         except:
             self.eventLog.traceAdd(self.traceName,sys.exc_info()[0])
     def servRcv(self):
-        self.clientSock.bind(('localhost',50000))
+        self.clientSock.bind(('',5000))
         self.clientSock.listen(1)
         conn , addr = self.clientSock.accept()
         while 1:
