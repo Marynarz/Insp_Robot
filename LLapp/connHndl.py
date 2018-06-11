@@ -1,6 +1,7 @@
 from socket import *
 import netifaces as ni
 import sys
+import platform
 
 class connHndl:
     #variables
@@ -19,7 +20,7 @@ class connHndl:
             self.network = tempIp[0:len(tempIp)-3]
             self.eventLog.traceAdd(self.traceName,"Own ip: "+tempIp+" network: "+self.network)
             print('Loading...\n Wait a moment...')
-            connHandler.scanRun()
+            self.scanRun()
             print("Welcome!")
 
     def __del__(self):
@@ -27,7 +28,10 @@ class connHndl:
 
     #determine own ip
     def ownIP(self):
-        return ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+        if(platform.system()=="Darwin"):
+            return ni.ifaddresses('en0')[ni.AF_INET][0]['addr']
+        else:
+            return ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
     #check if ip address and port is open
     def isOk(self,addr, port):
         s = socket(AF_INET, SOCK_STREAM)
