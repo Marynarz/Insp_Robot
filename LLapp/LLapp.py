@@ -1,10 +1,12 @@
 from connHndl import *
 from traceHndl import *
 from funcs import *
+from frameHndl import *
 
 #global vars
 traceEntry = traceHndl()
 connHandler = connHndl(traceEntry,True)
+frameHandler = frameHnd(traceEntry)
 
 traceName = "MAIN"
 
