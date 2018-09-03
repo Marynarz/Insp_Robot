@@ -20,7 +20,7 @@ class connHndl:
             self.network = tempIp[0:len(tempIp)-3]
             self.eventLog.traceAdd(self.traceName,"Own ip: "+tempIp+" network: "+self.network)
             print('Loading...\n Wait a moment...')
-            self.scanRun()
+            #self.scanRun()
             print("Welcome!")
 
     def __del__(self):

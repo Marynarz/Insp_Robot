@@ -1,20 +1,35 @@
+# PC APP
+#client (pc) -> server (robot)
+
+#own classes
 from connHndl import *
 from traceHndl import *
 from funcs import *
 from frameHndl import *
 
-#global vars
-traceEntry = traceHndl()
-connHandler = connHndl(traceEntry,True)
-frameHandler = frameHnd(traceEntry)
+#python libs
+import sys
 
-traceName = "MAIN"
+#global vars
+traceEntry = traceHndl()                    #trace point
+connHandler = connHndl(traceEntry,True)     #connection handler
+frameHandler = frameHnd(traceEntry)         #frame handler
+ipAddr =0
+port =0
+
+traceName = "MAIN"                          #trace name
 
 
 def main():
-    traceEntry.traceAdd(traceName, "Poczatek pliku")
+    if len(sys.argv) ==3:                    #if args in program call, add server ip and port
+        #LLapp.py <ipaddress> <port>
+        ipAddr = sys.argv[1]
+        port = sys.argv[2]
+        traceEntry.traceAdd(traceName,"Args used: ipAddress: "+str(ipAddr)+", port: "+str(port))
+
+    traceEntry.traceAdd(traceName, "Main client welcome")
     connHandler.connect()
     commandLineClient(traceEntry,connHandler)
 
 if __name__ == "__main__":
-    main()
+    main()                      #main call
