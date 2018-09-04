@@ -1,3 +1,8 @@
+# Command Line Client
+# h, help for help menu
+# q, x, quit, exit for exit program
+# s <data>, send <data> for send <data>
+
 cliName = "CLI"
 def help():
     print("---WELCOME IN INSPECTION ROBOT---")
@@ -5,6 +10,7 @@ def help():
     print("Commands:")
     print("---------")
     print("\"help\", \"h\" - this help")
+    print("\"send <data>\", \"s <data>\" - sending <data> to server")
     print("\"exit\", \"q\" - exit")
 
 def commandLineClient(traceEntry,connHndl):

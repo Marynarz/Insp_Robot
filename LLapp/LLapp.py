@@ -13,7 +13,7 @@ import sys
 #global vars
 traceEntry = traceHndl()                    #trace point
 connHandler = connHndl(traceEntry,True)     #connection handler
-frameHandler = frameHnd(traceEntry)         #frame handler
+frameHandler = frameHndl(traceEntry)         #frame handler
 ipAddr =0
 port =0
 

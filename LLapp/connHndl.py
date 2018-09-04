@@ -7,6 +7,7 @@ class connHndl:
     #variables
     network = 0
     addreses = set()
+    port = 0
     eventLog = 0
     traceName = "CONN_HNDL"
     clientSock = socket(AF_INET,SOCK_STREAM)
@@ -20,22 +21,31 @@ class connHndl:
             self.network = tempIp[0:len(tempIp)-3]
             self.eventLog.traceAdd(self.traceName,"Own ip: "+tempIp+" network: "+self.network)
             print('Loading...\n Wait a moment...')
-            #self.scanRun()
+            self.scanRun()
             print("Welcome!")
 
+    #def __init__(self,traceLog,ipAddr,port):
+    #    self.eventLog = traceLog
+    #    self.eventLog.traceAdd(self.traceName, "Connection handler, welcome!")
+    #    self.addreses = ipAddr
+    #    self.port = port
+    #    self.eventLog.traceAdd(self.traceName, "Connectin hander with parameters: ipAddress: "+str(ipAddr)+" : "+str(port))
+
+    #destructor
     def __del__(self):
         self.clientSock.close()
 
     #determine own ip
     def ownIP(self):
-        if(platform.system()=="Darwin"):
+        if(platform.system()=="Darwin"):    #apple mac
             return ni.ifaddresses('en0')[ni.AF_INET][0]['addr']
-        else:
+        else:                               #the other
             return ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+
     #check if ip address and port is open
     def isOk(self,addr, port):
         s = socket(AF_INET, SOCK_STREAM)
-        s.settimeout(0.001)
+        s.settimeout(0.01)
         if not s.connect_ex((addr, port)):
             # print("Addres: "+addr+" port: "+str(port))
             self.addreses.add((addr,port))
@@ -70,6 +80,8 @@ class connHndl:
             #self.clientSock.close()
         except:
             self.eventLog.traceAdd(self.traceName,sys.exc_info()[0])
+
+    #receive data on server
     def servRcv(self):
         self.clientSock.bind(('',5000))
         self.clientSock.listen(1)
@@ -79,10 +91,14 @@ class connHndl:
             if not data:
                 break
             conn.sendall(data)
+
+    #send data
     def sendData(self,data):
         try:
             self.clientSock.sendall(str(data))
         except:
             self.eventLog.traceAdd(self.traceName, sys.exc_info()[0])
+
+    #received data
     def recvData(self):
         return self.clientSock.recv(1024)
