@@ -49,9 +49,9 @@ class frameHndl:
 
     #building frame
     def getFrame(self):
-        self.frameHeader = self.frameHeader << 8    #header
-        self.movePart = self.movePart << 4          #movement part
-        frame = self.frameHeader|self.movePart|self.endFrame    #all frame
+        frameHeader = self.frameHeader << 8    #header
+        movePart = self.movePart << 4          #movement part
+        frame = frameHeader|movePart|self.endFrame    #all frame
         self.eventLog.traceAdd(self.traceName, "frame: " + "{0:b}".format(frame))   #write frame in logs
         return frame
 

@@ -1,0 +1,14 @@
+FRAME_HNDL: Frame handler welcome!
+TEST_1: Test case 1 : frame NOK
+FRAME_HNDL: ERROR: left == right: l: True r: True
+FRAME_HNDL: frame: 111010000011
+TEST_1: Test frame: 111010000011
+FRAME_HNDL: frame: 111010000011
+FRAME_TEST: Frame validation OK: 111010000011
+TEST_1: Test 1 OK
+TEST_2: Test case 2 : frame OK
+FRAME_HNDL: frame: 111011000011
+TEST_2: Test frame: 111011000011
+FRAME_HNDL: frame: 111011000011
+FRAME_TEST: Frame validation OK: 111011000011
+TEST_2: Test 2 NOK
